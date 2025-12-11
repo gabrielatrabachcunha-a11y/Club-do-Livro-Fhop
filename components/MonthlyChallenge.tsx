@@ -316,7 +316,6 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
                     <div className="mt-6 flex items-center text-sm text-slate-500">
                       <Star size={16} className="text-yellow-400 mr-1 fill-yellow-400" />
                       <span className="font-medium text-slate-700 mr-1">Club do Livro</span>
-                      <span>Recomendação FHOP</span>
                     </div>
                   </div>
                 </div>

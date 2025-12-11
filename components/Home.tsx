@@ -53,24 +53,41 @@ const Home: React.FC<Props> = ({ user, onChangeTab, isAdmin = false }) => {
         percent: sixMonthTotalItems > 0 ? Math.round((sixMonthCompleted / sixMonthTotalItems) * 100) : 0
       }
     });
+
+    // Listen for storage events (updates from other tabs)
+    const handleStorage = () => {
+        // Re-run the effect logic or simplify by reloading window location if critical, 
+        // but re-calculating state is smoother.
+        // For brevity in this hook, we just rely on component mount, but we can add listeners if needed.
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+
   }, []);
 
   return (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">
       {/* Welcome Section */}
-      <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-800 mb-2">
-            Olá, {user.name.split(' ')[0]}! 👋
-          </h1>
-          <p className="text-slate-500 text-lg">
+      <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden group">
+        
+        {/* Decorative Background */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-60 -translate-y-1/2 translate-x-1/4"></div>
+
+        <div className="relative z-10 w-full">
+          <div className="flex items-center gap-3 mb-3">
+             <h1 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight">
+               Olá, {user.name.split(' ')[0]}! 👋
+             </h1>
+             {isAdmin && (
+                <span className="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider shadow-md">
+                  Admin
+                </span>
+             )}
+          </div>
+          <p className="text-slate-500 text-lg leading-relaxed font-light max-w-lg">
             "Terei prazer nos teus decretos; não me esquecerei da tua palavra."
-            <span className="block text-sm font-semibold text-slate-400 mt-1">- Salmos 119:16</span>
+            <span className="block text-sm font-bold text-blue-600 mt-2 font-serif italic">- Salmos 119:16</span>
           </p>
-        </div>
-        <div className="bg-blue-50 px-6 py-4 rounded-2xl border border-blue-100">
-           <p className="text-xs font-bold text-blue-500 uppercase tracking-wider mb-1">Status</p>
-           <p className="text-blue-900 font-bold text-lg">{isAdmin ? 'Administrador' : (user.isMember ? 'Membro FHOP' : 'Visitante')}</p>
         </div>
       </div>
 

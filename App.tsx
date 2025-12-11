@@ -115,9 +115,13 @@ const App: React.FC = () => {
               )}
               <p className="text-xs text-slate-500 uppercase font-bold mb-1">Bem-vindo(a)</p>
               <p className="font-bold text-slate-800 text-lg truncate">{user.name.split(' ')[0]}</p>
-              <div className={`flex items-center mt-2 text-xs font-medium px-2 py-1 rounded-md w-max ${isAdmin ? 'bg-purple-100 text-purple-700' : 'bg-blue-50 text-blue-600'}`}>
-                 {isAdmin ? 'Administrador' : (user.isMember ? 'Membro FHOP' : 'Visitante')}
-              </div>
+              
+              {/* Only show label if Admin */}
+              {isAdmin && (
+                <div className="flex items-center mt-2 text-xs font-medium px-2 py-1 rounded-md w-max bg-purple-100 text-purple-700">
+                   Administrador
+                </div>
+              )}
            </div>
 
            {/* Navigation Links */}

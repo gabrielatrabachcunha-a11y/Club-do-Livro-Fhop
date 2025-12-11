@@ -200,34 +200,6 @@ const Registration: React.FC<Props> = ({ onRegister }) => {
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-3">Você é membro da FHOP?</label>
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, isMember: true })}
-                className={`py-3 px-4 rounded-xl border font-medium transition-all ${
-                  formData.isMember
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                Sim
-              </button>
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, isMember: false })}
-                className={`py-3 px-4 rounded-xl border font-medium transition-all ${
-                  !formData.isMember
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                    : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                Não
-              </button>
-            </div>
-          </div>
-
           <button
             type="submit"
             className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold text-lg hover:bg-slate-800 transition-all shadow-xl shadow-slate-200 flex items-center justify-center group"

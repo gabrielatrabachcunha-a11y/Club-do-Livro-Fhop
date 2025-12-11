@@ -81,8 +81,9 @@ const ReadingPlan: React.FC<Props> = ({ mode }) => {
 
         <div className="space-y-4">
           {Object.entries(plan).map(([month, items]) => {
-            const hasItems = items && items.length > 0;
-            const progress = calculateProgress(items);
+            const planItems = items as ReadingPlanItem[];
+            const hasItems = planItems && planItems.length > 0;
+            const progress = calculateProgress(planItems);
             const isOpen = openMonth === month;
 
             return (
@@ -110,7 +111,7 @@ const ReadingPlan: React.FC<Props> = ({ mode }) => {
                         <p className="text-sm">Nenhuma leitura agendada para este mês.</p>
                       </div>
                     ) : (
-                      items.map((item) => {
+                      planItems.map((item) => {
                         const isChecked = checkedIds.has(item.id);
                         return (
                           <div key={item.id} className="group flex flex-col border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors">
