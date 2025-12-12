@@ -66,13 +66,13 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('fhop_data_update_challenges', handleLocalUpdate);
 
-    // 3. Polling for strict synchronization
+    // 3. Polling for strict synchronization (Updated to 1000ms for faster updates)
     const intervalId = setInterval(() => {
       const currentStored = loadData();
       if (JSON.stringify(currentStored) !== JSON.stringify(challenges)) {
         setChallenges(currentStored);
       }
-    }, 2000);
+    }, 1000);
 
     // 4. Load Completion Statuses (Private)
     try {
@@ -322,10 +322,7 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
                       </button>
                     </div>
                     
-                    <div className="mt-6 flex items-center text-sm text-slate-500">
-                      <Star size={16} className="text-yellow-400 mr-1 fill-yellow-400" />
-                      <span className="font-medium text-slate-700 mr-1">Club do Livro</span>
-                    </div>
+                    {/* Footer text removed as per request */}
                   </div>
                 </div>
               </div>

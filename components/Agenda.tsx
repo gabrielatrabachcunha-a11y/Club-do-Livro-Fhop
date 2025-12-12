@@ -47,22 +47,21 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('fhop_data_update_agenda', handleLocalUpdate);
 
-    // 3. POLLING (Safety Net): Check every 2 seconds for changes
-    // This handles cases where events might be missed or specific browser quirks
+    // 3. POLLING (Safety Net): Check every 1 second for changes (Fast response)
     const intervalId = setInterval(() => {
       const currentStored = loadData();
       // Deep comparison to avoid unnecessary re-renders
       if (JSON.stringify(currentStored) !== JSON.stringify(events)) {
         setEvents(currentStored);
       }
-    }, 2000);
+    }, 1000);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('fhop_data_update_agenda', handleLocalUpdate);
       clearInterval(intervalId);
     };
-  }, [events]); // Depend on events to make comparison work inside interval closure if needed, though loadData reads fresh
+  }, [events]); 
 
   const saveEventsToStorage = (newEvents: AgendaEvent[]) => {
     setEvents(newEvents);

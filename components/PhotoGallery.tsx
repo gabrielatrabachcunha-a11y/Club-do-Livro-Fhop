@@ -50,13 +50,13 @@ const PhotoGallery: React.FC<Props> = ({ isAdmin = false }) => {
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('fhop_data_update_photos', handleLocalUpdate);
 
-    // 3. Polling for reliability
+    // 3. Polling for reliability (Updated to 1000ms for faster updates)
     const intervalId = setInterval(() => {
       const currentStored = loadData();
       if (JSON.stringify(currentStored) !== JSON.stringify(photos)) {
         setPhotos(currentStored);
       }
-    }, 2000);
+    }, 1000);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);

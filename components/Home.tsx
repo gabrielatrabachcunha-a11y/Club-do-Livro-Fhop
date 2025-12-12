@@ -65,14 +65,14 @@ const Home: React.FC<Props> = ({ user, onChangeTab, isAdmin = false }) => {
     };
     window.addEventListener('storage', handleStorage);
     
-    // Poll for changes
+    // Poll for changes (Updated to 1000ms for faster updates)
     const intervalId = setInterval(() => {
         const newStats = calculateStats();
         // Simple comparison
         if (JSON.stringify(newStats) !== JSON.stringify(stats)) {
             setStats(newStats);
         }
-    }, 2000);
+    }, 1000);
 
     return () => {
         window.removeEventListener('storage', handleStorage);
@@ -180,7 +180,7 @@ const Home: React.FC<Props> = ({ user, onChangeTab, isAdmin = false }) => {
       <div id="challenge-section">
         <div className="flex items-center space-x-2 mb-4 px-2">
           <Trophy className="text-yellow-600" size={20} />
-          <h2 className="text-xl font-bold text-slate-800">Destaque do Mês</h2>
+          <h2 className="text-xl font-bold text-slate-800">Desafio</h2>
         </div>
         <MonthlyChallenge isAdmin={isAdmin} />
       </div>
