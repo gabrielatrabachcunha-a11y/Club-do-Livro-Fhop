@@ -18,7 +18,7 @@ const Home: React.FC<Props> = ({ user, onChangeTab, isAdmin = false }) => {
     sixMonths: { total: 0, completed: 0, percent: 0 }
   });
 
-  useEffect(() => {
+  const calculateStats = () => {
     // Calculate progress for Year Plan
     const yearPlan = generatePlan(365);
     const yearTotalItems = Object.values(yearPlan).flat().length;
@@ -41,7 +41,7 @@ const Home: React.FC<Props> = ({ user, onChangeTab, isAdmin = false }) => {
       }
     } catch (e) {}
 
-    setStats({
+    return {
       year: {
         total: yearTotalItems,
         completed: yearCompleted,
@@ -52,18 +52,34 @@ const Home: React.FC<Props> = ({ user, onChangeTab, isAdmin = false }) => {
         completed: sixMonthCompleted,
         percent: sixMonthTotalItems > 0 ? Math.round((sixMonthCompleted / sixMonthTotalItems) * 100) : 0
       }
-    });
+    };
+  };
+
+  useEffect(() => {
+    // Initial calculation
+    setStats(calculateStats());
 
     // Listen for storage events (updates from other tabs)
     const handleStorage = () => {
-        // Re-run the effect logic or simplify by reloading window location if critical, 
-        // but re-calculating state is smoother.
-        // For brevity in this hook, we just rely on component mount, but we can add listeners if needed.
+        setStats(calculateStats());
     };
     window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
+    
+    // Poll for changes
+    const intervalId = setInterval(() => {
+        const newStats = calculateStats();
+        // Simple comparison
+        if (JSON.stringify(newStats) !== JSON.stringify(stats)) {
+            setStats(newStats);
+        }
+    }, 2000);
 
-  }, []);
+    return () => {
+        window.removeEventListener('storage', handleStorage);
+        clearInterval(intervalId);
+    };
+
+  }, [stats]);
 
   return (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-12">

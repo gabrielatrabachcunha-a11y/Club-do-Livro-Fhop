@@ -24,36 +24,46 @@ const PhotoGallery: React.FC<Props> = ({ isAdmin = false }) => {
     try {
       const savedPhotos = localStorage.getItem('fhop_gallery_photos');
       if (savedPhotos) {
-        setPhotos(JSON.parse(savedPhotos));
+        return JSON.parse(savedPhotos);
       } else {
-        setPhotos(DEFAULT_PHOTOS);
+        return DEFAULT_PHOTOS;
       }
     } catch (e) {
-      setPhotos(DEFAULT_PHOTOS);
+      return DEFAULT_PHOTOS;
     }
   };
 
   useEffect(() => {
-    loadData();
+    // 1. Initial Load
+    setPhotos(loadData());
 
-    // Listeners for sync
+    // 2. Listeners for sync
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'fhop_gallery_photos') {
-        loadData();
+        setPhotos(loadData());
       }
     };
     const handleLocalUpdate = () => {
-      loadData();
+      setPhotos(loadData());
     };
 
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('fhop_data_update_photos', handleLocalUpdate);
 
+    // 3. Polling for reliability
+    const intervalId = setInterval(() => {
+      const currentStored = loadData();
+      if (JSON.stringify(currentStored) !== JSON.stringify(photos)) {
+        setPhotos(currentStored);
+      }
+    }, 2000);
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('fhop_data_update_photos', handleLocalUpdate);
+      clearInterval(intervalId);
     };
-  }, []);
+  }, [photos]);
 
   const savePhotos = (updatedPhotos: GalleryPhoto[]) => {
     setPhotos(updatedPhotos);

@@ -35,38 +35,46 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
       if (savedData) {
         const parsed = JSON.parse(savedData);
         if (!Array.isArray(parsed) && parsed !== null) {
-           setChallenges([{ ...parsed, id: 'legacy_1' }]);
+           return [{ ...parsed, id: 'legacy_1' }];
         } else if (Array.isArray(parsed)) {
-           setChallenges(parsed);
+           return parsed;
         } else {
-           setChallenges([]);
+           return [];
         }
       } else {
-        setChallenges(INITIAL_CHALLENGES);
+        return INITIAL_CHALLENGES;
       }
     } catch (e) {
-      setChallenges(INITIAL_CHALLENGES);
+      return INITIAL_CHALLENGES;
     }
   };
 
   useEffect(() => {
     // 1. Initial Load
-    loadData();
+    setChallenges(loadData());
 
-    // 2. Sync Listener
+    // 2. Sync Listeners
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'fhop_challenges_list') {
-        loadData();
+        setChallenges(loadData());
       }
     };
     const handleLocalUpdate = () => {
-      loadData();
+      setChallenges(loadData());
     };
 
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('fhop_data_update_challenges', handleLocalUpdate);
 
-    // 3. Load Completion Statuses (Private)
+    // 3. Polling for strict synchronization
+    const intervalId = setInterval(() => {
+      const currentStored = loadData();
+      if (JSON.stringify(currentStored) !== JSON.stringify(challenges)) {
+        setChallenges(currentStored);
+      }
+    }, 2000);
+
+    // 4. Load Completion Statuses (Private)
     try {
         const savedCompleted = localStorage.getItem('fhop_challenges_completed_ids');
         if (savedCompleted) {
@@ -77,8 +85,9 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('fhop_data_update_challenges', handleLocalUpdate);
+      clearInterval(intervalId);
     };
-  }, []);
+  }, [challenges]);
 
   const saveChallenges = (newList: BookChallenge[]) => {
       setChallenges(newList);

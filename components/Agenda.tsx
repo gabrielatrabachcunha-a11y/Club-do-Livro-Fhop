@@ -19,39 +19,50 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
     try {
       const savedEvents = localStorage.getItem('fhop_agenda_events');
       if (savedEvents) {
-        setEvents(JSON.parse(savedEvents));
+        return JSON.parse(savedEvents);
       } else {
-        setEvents(EVENTS);
+        return EVENTS;
       }
     } catch (e) {
-      setEvents(EVENTS);
+      return EVENTS;
     }
   };
 
   useEffect(() => {
     // Initial load
-    loadData();
+    setEvents(loadData());
 
-    // Listen for changes from other tabs/windows
+    // 1. Listen for storage events (Tab to Tab sync)
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'fhop_agenda_events') {
-        loadData();
+        setEvents(loadData());
       }
     };
 
-    // Listen for changes from within the same window (custom event)
+    // 2. Listen for local events (Component to Component sync)
     const handleLocalUpdate = () => {
-      loadData();
+      setEvents(loadData());
     };
 
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('fhop_data_update_agenda', handleLocalUpdate);
 
+    // 3. POLLING (Safety Net): Check every 2 seconds for changes
+    // This handles cases where events might be missed or specific browser quirks
+    const intervalId = setInterval(() => {
+      const currentStored = loadData();
+      // Deep comparison to avoid unnecessary re-renders
+      if (JSON.stringify(currentStored) !== JSON.stringify(events)) {
+        setEvents(currentStored);
+      }
+    }, 2000);
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('fhop_data_update_agenda', handleLocalUpdate);
+      clearInterval(intervalId);
     };
-  }, []);
+  }, [events]); // Depend on events to make comparison work inside interval closure if needed, though loadData reads fresh
 
   const saveEventsToStorage = (newEvents: AgendaEvent[]) => {
     setEvents(newEvents);
