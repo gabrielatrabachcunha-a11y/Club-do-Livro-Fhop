@@ -4,16 +4,16 @@ import Registration from './components/Registration';
 import ReadingPlan from './components/ReadingPlan';
 import Agenda from './components/Agenda';
 import MonthlyChallenge from './components/MonthlyChallenge';
-import PhotoGallery from './components/PhotoGallery'; // Imported
 import BirthdayModal from './components/BirthdayModal';
 import Home from './components/Home';
-import RecycleBin from './components/RecycleBin'; // Imported
-import { BookOpen, Calendar, Award, Clock, Menu, X, LogOut, Home as HomeIcon, ShieldCheck, Trash2, Image as ImageIcon } from 'lucide-react';
+import RecycleBin from './components/RecycleBin';
+import BookBox from './components/BookBox'; // Imported
+import { BookOpen, Calendar, Award, Clock, Menu, X, LogOut, Home as HomeIcon, ShieldCheck, Trash2, Package } from 'lucide-react';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [activeTab, setActiveTab] = useState<'home' | 'year' | 'six_months' | 'agenda' | 'challenge' | 'gallery' | 'recycle_bin'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'year' | 'six_months' | 'agenda' | 'challenge' | 'box' | 'recycle_bin'>('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -131,7 +131,7 @@ const App: React.FC = () => {
               <NavButton tab="six_months" icon={Clock} label="Bíblia em 6 Meses" />
               <NavButton tab="agenda" icon={BookOpen} label="Agenda Club" />
               <NavButton tab="challenge" icon={Award} label="Desafio do Mês" />
-              <NavButton tab="gallery" icon={ImageIcon} label="Galeria de Fotos" />
+              <NavButton tab="box" icon={Package} label="Box Club do Livro" />
               
               {isAdmin && (
                 <div className="pt-4 mt-4 border-t border-slate-100">
@@ -162,17 +162,7 @@ const App: React.FC = () => {
             {activeTab === 'six_months' && <ReadingPlan key="six_months" mode="six_months" />}
             {activeTab === 'agenda' && <Agenda key="agenda" isAdmin={isAdmin} />}
             {activeTab === 'challenge' && <MonthlyChallenge key="challenge" isAdmin={isAdmin} />}
-            
-            {activeTab === 'gallery' && (
-              <div className="space-y-6">
-                <div className="flex items-center space-x-2">
-                  <ImageIcon className="text-pink-600" size={24} />
-                  <h2 className="text-2xl font-bold text-slate-800">Galeria de Fotos</h2>
-                </div>
-                <PhotoGallery key="gallery" isAdmin={isAdmin} />
-              </div>
-            )}
-
+            {activeTab === 'box' && <BookBox key="box" />}
             {activeTab === 'recycle_bin' && isAdmin && <RecycleBin key="recycle_bin" />}
           </div>
         </div>

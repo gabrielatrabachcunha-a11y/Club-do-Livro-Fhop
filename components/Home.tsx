@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { User } from '../types';
 import { generatePlan } from '../services/readingPlanService';
-import { ArrowRight, BookOpen, Clock, Calendar, Trophy, Image as ImageIcon } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, Calendar, Trophy } from 'lucide-react';
 import MonthlyChallenge from './MonthlyChallenge';
 import Agenda from './Agenda';
-import PhotoGallery from './PhotoGallery';
+import BookBox from './BookBox';
 
 interface Props {
   user: User;
@@ -194,9 +194,9 @@ const Home: React.FC<Props> = ({ user, onChangeTab, isAdmin = false }) => {
         <Agenda isAdmin={isAdmin} />
       </div>
 
-      {/* Photo Gallery Section */}
-      <div id="gallery-section">
-        <PhotoGallery isAdmin={isAdmin} />
+      {/* Box Section */}
+      <div id="box-section">
+         <BookBox />
       </div>
     </div>
   );

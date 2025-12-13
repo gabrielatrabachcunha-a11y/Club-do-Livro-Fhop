@@ -90,59 +90,164 @@ export const BIBLE_BOOKS = [
 
 export const EVENTS: AgendaEvent[] = [
   {
-    id: '1',
-    title: 'Culto de Jovens - FHOP',
-    date: '2024-06-15',
+    id: 'jan',
+    title: 'Discussão do plano de leitura bíblica',
+    date: '2025-01-01',
+    displayDate: 'Janeiro - Sem data definida',
     time: '19:30',
-    location: 'Auditório Principal',
-    description: 'Uma noite de adoração e estudo profundo da palavra.'
+    location: 'FHOP',
+    description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
   },
   {
-    id: '2',
-    title: 'Café Literário',
-    date: '2024-06-22',
-    time: '09:00',
-    location: 'Cafeteria do Hall',
-    description: 'Discussão sobre o desafio do livro do mês.'
+    id: 'fev',
+    title: 'Discussão do livro Devoção Extravagante',
+    date: '2025-02-01',
+    displayDate: 'Fevereiro - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Análise e conversa sobre o livro Devoção Extravagante de Emi Sousa.'
   },
   {
-    id: '3',
-    title: 'Vigília de Oração',
-    date: '2024-07-05',
-    time: '23:00',
-    location: 'Sala de Oração',
-    description: 'Intercessão pelo avivamento da nossa nação.'
+    id: 'mar',
+    title: 'Discussão do plano de leitura bíblica',
+    date: '2025-03-01',
+    displayDate: 'Março - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
+  },
+  {
+    id: 'abr',
+    title: 'Discussão do livro Cultura de Oração',
+    date: '2025-04-01',
+    displayDate: 'Abril - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Análise e conversa sobre o livro Cultura de Oração de Mike Duque Estrada.'
+  },
+  {
+    id: 'mai',
+    title: 'Discussão do plano de leitura bíblica',
+    date: '2025-05-01',
+    displayDate: 'Maio - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
+  },
+  {
+    id: 'jun',
+    title: 'Discussão do livro Caminhos Antigos',
+    date: '2025-06-01',
+    displayDate: 'Junho - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Análise e conversa sobre o livro Caminhos Antigos de J.C. Ryle.'
+  },
+  {
+    id: 'jul',
+    title: 'Discussão do plano de leitura bíblica',
+    date: '2025-07-01',
+    displayDate: 'Julho - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
+  },
+  {
+    id: 'ago',
+    title: 'Discussão do livro Chamados para Cantar',
+    date: '2025-08-01',
+    displayDate: 'Agosto - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Análise e conversa sobre o livro Chamados para Cantar de Rachel Culver.'
+  },
+  {
+    id: 'set',
+    title: 'Discussão do plano de leitura bíblica',
+    date: '2025-09-01',
+    displayDate: 'Setembro - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
+  },
+  {
+    id: 'out',
+    title: 'Discussão do livro Misericórdia Triunfante',
+    date: '2025-10-01',
+    displayDate: 'Outubro - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Análise e conversa sobre o livro Misericórdia Triunfante de Dale Anderson.'
+  },
+  {
+    id: 'nov',
+    title: 'Discussão do plano de leitura bíblica',
+    date: '2025-11-01',
+    displayDate: 'Novembro - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
+  },
+  {
+    id: 'dez',
+    title: 'Discussão do livro Bíblia 360',
+    date: '2025-12-01',
+    displayDate: 'Dezembro - Sem data definida',
+    time: '19:30',
+    location: 'FHOP',
+    description: 'Análise e conversa sobre o livro Bíblia 360 de Daniel Lim.'
   }
 ];
 
 export const INITIAL_CHALLENGES: BookChallenge[] = [
   {
     id: '1',
-    title: "Cristianismo Puro e Simples",
-    author: "C.S. Lewis",
-    description: "Uma obra clássica que explora a essência da fé cristã, removendo as complexidades denominacionais e focando no que realmente importa. Leitura obrigatória para fortalecer os fundamentos.",
+    title: "Devoção Extravagante",
+    author: "Emi Sousa",
+    description: "Um chamado para retornar ao primeiro amor e cultivar uma paixão ardente por Jesus, inspirado na vida e na adoração de Maria de Betânia.",
+    coverColor: "bg-rose-700",
+    month: "Janeiro / Fevereiro"
+  },
+  {
+    id: '2',
+    title: "Cultura de Oração",
+    author: "Mike Duque Estrada",
+    description: "Princípios práticos e teológicos para estabelecer uma vida de oração consistente, tanto no lugar secreto quanto na oração corporativa.",
+    coverColor: "bg-blue-700",
+    month: "Março / Abril"
+  },
+  {
+    id: '3',
+    title: "Caminhos Antigos",
+    author: "J.C. Ryle",
+    description: "Uma obra clássica que convoca a igreja a retornar às verdades fundamentais da fé cristã e à santidade prática, trilhando as veredas antigas.",
     coverColor: "bg-amber-700",
-    month: "Junho"
+    month: "Maio / Junho"
+  },
+  {
+    id: '4',
+    title: "Chamados para Cantar",
+    author: "Rachel Culver",
+    description: "Uma visão bíblica sobre o ministério de música e canto na casa de oração, explorando o papel profético e sacerdotal da adoração.",
+    coverColor: "bg-purple-700",
+    month: "Julho / Agosto"
+  },
+  {
+    id: '5',
+    title: "Misericórdia Triunfante",
+    author: "Dale Anderson",
+    description: "Uma mensagem de esperança e restauração, revelando como a misericórdia de Deus supera o julgamento e restaura vidas para um propósito maior.",
+    coverColor: "bg-emerald-700",
+    month: "Setembro / Outubro"
+  },
+  {
+    id: '6',
+    title: "Bíblia 360",
+    author: "Daniel Lim",
+    description: "Um guia para imersão total nas Escrituras, incentivando a leitura sistemática, o estudo panorâmico e a meditação profunda em toda a Bíblia.",
+    coverColor: "bg-slate-800",
+    month: "Novembro / Dezembro"
   }
 ];
 
-export const DEFAULT_PHOTOS: GalleryPhoto[] = [
-  {
-    id: 'def1',
-    url: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=800&auto=format&fit=crop',
-    description: 'Momento de Leitura em Grupo',
-    date: '2024-05-20'
-  },
-  {
-    id: 'def2',
-    url: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=800&auto=format&fit=crop',
-    description: 'Café Literário e Comunhão',
-    date: '2024-06-10'
-  },
-  {
-    id: 'def3',
-    url: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop',
-    description: 'Noite de Adoração',
-    date: '2024-06-15'
-  }
-];
+export const DEFAULT_PHOTOS: GalleryPhoto[] = [];

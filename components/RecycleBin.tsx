@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, RefreshCw, X, Calendar, Book, Camera, AlertTriangle } from 'lucide-react';
+import { Trash2, RefreshCw, X, Calendar, Book, AlertTriangle, Image as ImageIcon } from 'lucide-react';
 import { RecycleBinItem, AgendaEvent, BookChallenge, GalleryPhoto } from '../types';
-import { EVENTS, INITIAL_CHALLENGES, DEFAULT_PHOTOS } from '../constants';
+import { EVENTS, INITIAL_CHALLENGES } from '../constants';
 
 const RecycleBin: React.FC = () => {
   const [items, setItems] = useState<RecycleBinItem[]>([]);
@@ -73,7 +73,7 @@ const RecycleBin: React.FC = () => {
       else if (item.type === 'photo') {
         const currentData = localStorage.getItem('fhop_gallery_photos');
         const currentList: GalleryPhoto[] = currentData ? JSON.parse(currentData) : [];
-        currentList.unshift(item.originalData as GalleryPhoto); // Add to top
+        currentList.push(item.originalData as GalleryPhoto);
         
         localStorage.setItem('fhop_gallery_photos', JSON.stringify(currentList));
         window.dispatchEvent(new Event('fhop_data_update_photos'));
@@ -122,7 +122,6 @@ const RecycleBin: React.FC = () => {
              let detail = "";
              let badgeColor = "bg-gray-100 text-gray-600";
              let typeLabel = "Outro";
-             let photoUrl = "";
 
              if (item.type === 'event') {
                Icon = Calendar;
@@ -139,30 +138,20 @@ const RecycleBin: React.FC = () => {
                badgeColor = "bg-purple-100 text-purple-700";
                typeLabel = "Livro";
              } else if (item.type === 'photo') {
-               Icon = Camera;
+               Icon = ImageIcon;
                const data = item.originalData as GalleryPhoto;
-               title = "Foto da Galeria";
-               detail = data.description;
-               badgeColor = "bg-pink-100 text-pink-700";
+               title = data.description || "Foto";
+               detail = `${new Date(data.date).toLocaleDateString()}`;
+               badgeColor = "bg-pink-100 text-pink-600";
                typeLabel = "Foto";
-               photoUrl = data.url;
              }
 
              return (
                <div key={index} className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                  <div className="flex items-center gap-4 w-full md:w-auto">
-                    {photoUrl ? (
-                      <div className="relative w-16 h-16 flex-shrink-0">
-                         <img src={photoUrl} alt="Thumbnail" className="w-full h-full object-cover rounded-lg border border-slate-200" />
-                         <div className="absolute -bottom-1 -right-1 bg-pink-100 text-pink-600 p-1 rounded-full border border-white">
-                           <Camera size={12} />
-                         </div>
-                      </div>
-                    ) : (
-                      <div className={`p-3 rounded-lg ${badgeColor} flex-shrink-0`}>
+                    <div className={`p-3 rounded-lg ${badgeColor} flex-shrink-0`}>
                          <Icon size={24} />
-                      </div>
-                    )}
+                    </div>
                     
                     <div className="min-w-0">
                        <div className="flex items-center gap-2 mb-1">

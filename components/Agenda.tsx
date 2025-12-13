@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Clock, Edit2, X, Save, Plus, Trash2, AlertTriangle } from 'lucide-react';
+import { Calendar, MapPin, Clock, Edit2, X, Save, Plus, Trash2, AlertTriangle, Type } from 'lucide-react';
 import { EVENTS } from '../constants';
 import { AgendaEvent, RecycleBinItem } from '../types';
 
 interface Props {
   isAdmin?: boolean;
 }
+
+// STORAGE KEY UPDATED TO FORCE REFRESH OF NEW EVENTS
+const STORAGE_KEY = 'fhop_agenda_events_v2';
 
 const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
   const [events, setEvents] = useState<AgendaEvent[]>([]);
@@ -17,7 +20,7 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
 
   const loadData = () => {
     try {
-      const savedEvents = localStorage.getItem('fhop_agenda_events');
+      const savedEvents = localStorage.getItem(STORAGE_KEY);
       if (savedEvents) {
         return JSON.parse(savedEvents);
       } else {
@@ -34,7 +37,7 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
 
     // 1. Listen for storage events (Tab to Tab sync)
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'fhop_agenda_events') {
+      if (e.key === STORAGE_KEY) {
         setEvents(loadData());
       }
     };
@@ -65,7 +68,7 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
 
   const saveEventsToStorage = (newEvents: AgendaEvent[]) => {
     setEvents(newEvents);
-    localStorage.setItem('fhop_agenda_events', JSON.stringify(newEvents));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newEvents));
     // Dispatch custom event to notify other components in same window
     window.dispatchEvent(new Event('fhop_data_update_agenda'));
   };
@@ -108,6 +111,7 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
       id: Date.now().toString(),
       title: '',
       date: new Date().toISOString().split('T')[0],
+      displayDate: '',
       time: '19:30',
       location: 'FHOP',
       description: ''
@@ -125,7 +129,7 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
     if (!editingEvent) return;
     
     if (!editingEvent.title || !editingEvent.date) {
-      alert("Por favor, preencha pelo menos o título e a data.");
+      alert("Por favor, preencha pelo menos o título e a data (para ordenação).");
       return;
     }
 
@@ -136,7 +140,7 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
       updatedEvents = events.map(e => e.id === editingEvent.id ? editingEvent : e);
     }
     
-    // Sort by date
+    // Sort by date (technical date)
     updatedEvents.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     
     saveEventsToStorage(updatedEvents);
@@ -195,9 +199,15 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 text-blue-600 font-semibold text-sm mb-1 uppercase tracking-wide">
-                    <span>{new Date(event.date + 'T00:00:00').toLocaleDateString('pt-BR', { weekday: 'long' })}</span>
-                    <span>•</span>
-                    <span>{new Date(event.date + 'T00:00:00').toLocaleDateString('pt-BR')}</span>
+                    {event.displayDate ? (
+                        <span>{event.displayDate}</span>
+                    ) : (
+                      <>
+                        <span>{new Date(event.date + 'T00:00:00').toLocaleDateString('pt-BR', { weekday: 'long' })}</span>
+                        <span>•</span>
+                        <span>{new Date(event.date + 'T00:00:00').toLocaleDateString('pt-BR')}</span>
+                      </>
+                    )}
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 mb-2">{event.title}</h3>
                   <p className="text-slate-600 text-sm leading-relaxed mb-4">{event.description}</p>
@@ -241,15 +251,15 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
       {/* Edit/Add Modal */}
       {editingEvent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="flex justify-between items-center p-4 border-b border-slate-100">
+          <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 flex flex-col max-h-[90vh]">
+            <div className="flex justify-between items-center p-4 border-b border-slate-100 flex-shrink-0">
               <h3 className="text-lg font-bold text-slate-800">{isAddingNew ? 'Novo Evento' : 'Editar Evento'}</h3>
               <button onClick={() => setEditingEvent(null)} className="text-slate-400 hover:text-slate-600">
                 <X size={24} />
               </button>
             </div>
             
-            <div className="p-6 space-y-4">
+            <div className="p-6 space-y-4 overflow-y-auto">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Título</label>
                 <input 
@@ -263,7 +273,7 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
               
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Data</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Data (Ordenação)</label>
                   <input 
                     type="date" 
                     value={editingEvent.date}
@@ -289,6 +299,21 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
               </div>
 
               <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1 flex items-center gap-1">
+                  Texto da Data (Opcional)
+                  <Type size={14} className="text-slate-400" />
+                </label>
+                <input 
+                  type="text" 
+                  value={editingEvent.displayDate || ''}
+                  onChange={(e) => handleInputChange('displayDate', e.target.value)}
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                  placeholder="Ex: Janeiro - Sem data definida"
+                />
+                <p className="text-xs text-slate-400 mt-1">Se preenchido, substitui a data formatada na exibição.</p>
+              </div>
+
+              <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Local</label>
                 <input 
                   type="text" 
@@ -311,7 +336,7 @@ const Agenda: React.FC<Props> = ({ isAdmin = false }) => {
               </div>
             </div>
 
-            <div className="p-4 border-t border-slate-100 bg-slate-50 flex justify-end gap-3">
+            <div className="p-4 border-t border-slate-100 bg-slate-50 flex justify-end gap-3 flex-shrink-0">
               <button 
                 onClick={() => setEditingEvent(null)}
                 className="px-4 py-2 text-slate-600 font-medium hover:bg-slate-200 rounded-lg transition-colors"

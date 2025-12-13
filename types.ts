@@ -20,6 +20,7 @@ export interface AgendaEvent {
   time: string;
   location: string;
   description: string;
+  displayDate?: string; // Optional custom date text
 }
 
 export interface BookChallenge {
@@ -29,19 +30,20 @@ export interface BookChallenge {
   description: string;
   coverColor: string; // Tailwind class
   month: string;
-}
-
-export interface GalleryPhoto {
-  id: string;
-  url: string;
-  description: string;
-  date: string;
+  coverImage?: string; // Optional image URL
 }
 
 export interface Announcement {
   id: string;
   title: string;
   message: string;
+  date: string;
+}
+
+export interface GalleryPhoto {
+  id: string;
+  url: string;
+  description: string;
   date: string;
 }
 

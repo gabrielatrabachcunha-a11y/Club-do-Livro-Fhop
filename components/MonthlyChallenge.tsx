@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Book, Star, Award, PartyPopper, CheckCircle, Edit2, X, Save, Trash2, PlusCircle, AlertTriangle } from 'lucide-react';
+import { Book, Star, Award, PartyPopper, CheckCircle, Edit2, X, Save, Trash2, PlusCircle, AlertTriangle, Image as ImageIcon } from 'lucide-react';
 import { INITIAL_CHALLENGES } from '../constants';
 import { BookChallenge, RecycleBinItem } from '../types';
 
@@ -168,7 +168,8 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
       author: '',
       description: '',
       coverColor: 'bg-blue-700',
-      month: ''
+      month: '',
+      coverImage: ''
     });
     setIsEditing(true);
   };
@@ -243,6 +244,7 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
 
       {challenges.map((challenge) => {
           const isCompleted = completedIds.has(challenge.id);
+          const hasImage = !!challenge.coverImage;
           
           return (
             <div key={challenge.id} className="relative overflow-hidden bg-white rounded-2xl shadow-sm border border-slate-100 group/card transition-all hover:shadow-md">
@@ -280,14 +282,27 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
 
                 <div className="flex flex-col md:flex-row gap-8">
                   <div className="flex-shrink-0 flex justify-center md:justify-start">
-                    <div className={`w-40 h-60 md:w-48 md:h-72 rounded-lg shadow-xl ${challenge.coverColor} flex flex-col items-center justify-center p-6 text-center text-white transform hover:scale-105 transition-transform duration-300 relative`}>
-                      <Book size={48} className="mb-4 opacity-80" />
-                      <h3 className="font-serif font-bold text-lg md:text-xl leading-tight mb-2 line-clamp-3">{challenge.title}</h3>
-                      <p className="text-sm opacity-90 line-clamp-2">{challenge.author}</p>
+                    {/* Book Cover Container */}
+                    <div className={`w-40 h-60 md:w-48 md:h-72 rounded-lg shadow-xl ${!hasImage ? challenge.coverColor : 'bg-gray-100'} flex flex-col items-center justify-center p-0 text-center text-white transform hover:scale-105 transition-transform duration-300 relative overflow-hidden`}>
+                      
+                      {hasImage ? (
+                        <img 
+                          src={challenge.coverImage} 
+                          alt={`Capa de ${challenge.title}`} 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="p-6 flex flex-col items-center justify-center w-full h-full">
+                          <Book size={48} className="mb-4 opacity-80" />
+                          <h3 className="font-serif font-bold text-lg md:text-xl leading-tight mb-2 line-clamp-3">{challenge.title}</h3>
+                          <p className="text-sm opacity-90 line-clamp-2">{challenge.author}</p>
+                        </div>
+                      )}
+
                       {isCompleted && (
-                        <div className="absolute bottom-4 bg-white/20 backdrop-blur-md rounded-full px-3 py-1 flex items-center space-x-1">
-                          <CheckCircle size={14} className="text-white" />
-                          <span className="text-xs font-bold">Lido</span>
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md rounded-full px-3 py-1 flex items-center space-x-1 shadow-sm border border-white/30 w-max max-w-[90%]">
+                          <CheckCircle size={14} className="text-white flex-shrink-0" />
+                          <span className="text-xs font-bold text-white whitespace-nowrap">Lido</span>
                         </div>
                       )}
                     </div>
@@ -321,8 +336,6 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
                         )}
                       </button>
                     </div>
-                    
-                    {/* Footer text removed as per request */}
                   </div>
                 </div>
               </div>
@@ -379,7 +392,26 @@ const MonthlyChallenge: React.FC<Props> = ({ isAdmin = false }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Cor da Capa</label>
+                 <label className="block text-sm font-medium text-slate-700 mb-1">Capa do Livro (URL da Imagem)</label>
+                 <div className="flex gap-2">
+                    <input 
+                      type="text" 
+                      value={editForm.coverImage || ''}
+                      onChange={(e) => setEditForm({ ...editForm, coverImage: e.target.value })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="https://exemplo.com/capa.jpg"
+                    />
+                    {editForm.coverImage && (
+                      <div className="w-10 h-10 rounded-lg overflow-hidden border border-slate-200 flex-shrink-0">
+                        <img src={editForm.coverImage} alt="Preview" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                 </div>
+                 <p className="text-xs text-slate-400 mt-1">Deixe em branco para usar a capa colorida padrão.</p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Cor de Fundo (Padrão)</label>
                 <div className="flex flex-wrap gap-2">
                   {COLORS.map((color) => (
                     <button
