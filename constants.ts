@@ -92,8 +92,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'jan',
     title: 'Discussão do plano de leitura bíblica',
-    date: '2025-01-01',
-    displayDate: 'Janeiro - Sem data definida',
+    date: '2025-01-27',
+    displayDate: 'Janeiro - 27/01',
     time: '19:30',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
@@ -101,8 +101,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'fev',
     title: 'Discussão do livro Devoção Extravagante',
-    date: '2025-02-01',
-    displayDate: 'Fevereiro - Sem data definida',
+    date: '2025-02-24',
+    displayDate: 'Fevereiro - 24/02',
     time: '19:30',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Devoção Extravagante de Emi Sousa.'
@@ -110,8 +110,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'mar',
     title: 'Discussão do plano de leitura bíblica',
-    date: '2025-03-01',
-    displayDate: 'Março - Sem data definida',
+    date: '2025-03-31',
+    displayDate: 'Março - 31/03',
     time: '19:30',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
@@ -119,8 +119,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'abr',
     title: 'Discussão do livro Cultura de Oração',
-    date: '2025-04-01',
-    displayDate: 'Abril - Sem data definida',
+    date: '2025-04-28',
+    displayDate: 'Abril - 28/04',
     time: '19:30',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Cultura de Oração de Mike Duque Estrada.'
@@ -128,8 +128,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'mai',
     title: 'Discussão do plano de leitura bíblica',
-    date: '2025-05-01',
-    displayDate: 'Maio - Sem data definida',
+    date: '2025-05-26',
+    displayDate: 'Maio - 26/05',
     time: '19:30',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
@@ -137,8 +137,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'jun',
     title: 'Discussão do livro Caminhos Antigos',
-    date: '2025-06-01',
-    displayDate: 'Junho - Sem data definida',
+    date: '2025-06-30',
+    displayDate: 'Junho - 30/06',
     time: '19:30',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Caminhos Antigos de J.C. Ryle.'
@@ -146,8 +146,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'jul',
     title: 'Discussão do plano de leitura bíblica',
-    date: '2025-07-01',
-    displayDate: 'Julho - Sem data definida',
+    date: '2025-07-28',
+    displayDate: 'Julho - 28/07',
     time: '19:30',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
@@ -155,8 +155,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'ago',
     title: 'Discussão do livro Chamados para Cantar',
-    date: '2025-08-01',
-    displayDate: 'Agosto - Sem data definida',
+    date: '2025-08-25',
+    displayDate: 'Agosto - 25/08',
     time: '19:30',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Chamados para Cantar de Rachel Culver.'
@@ -164,8 +164,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'set',
     title: 'Discussão do plano de leitura bíblica',
-    date: '2025-09-01',
-    displayDate: 'Setembro - Sem data definida',
+    date: '2025-09-29',
+    displayDate: 'Setembro - 29/09',
     time: '19:30',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
@@ -173,8 +173,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'out',
     title: 'Discussão do livro Misericórdia Triunfante',
-    date: '2025-10-01',
-    displayDate: 'Outubro - Sem data definida',
+    date: '2025-10-27',
+    displayDate: 'Outubro - 27/10',
     time: '19:30',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Misericórdia Triunfante de Dale Anderson.'
@@ -182,8 +182,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'nov',
     title: 'Discussão do plano de leitura bíblica',
-    date: '2025-11-01',
-    displayDate: 'Novembro - Sem data definida',
+    date: '2025-11-24',
+    displayDate: 'Novembro - 24/11',
     time: '19:30',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
@@ -191,8 +191,8 @@ export const EVENTS: AgendaEvent[] = [
   {
     id: 'dez',
     title: 'Discussão do livro Bíblia 360',
-    date: '2025-12-01',
-    displayDate: 'Dezembro - Sem data definida',
+    date: '2025-12-08',
+    displayDate: 'Dezembro - 08/12',
     time: '19:30',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Bíblia 360 de Daniel Lim.'

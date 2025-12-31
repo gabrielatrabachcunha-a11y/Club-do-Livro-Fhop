@@ -14,12 +14,9 @@ const BookBox: React.FC = () => {
           <div className="text-center md:text-left">
             <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border border-white/20">
               <Gift size={16} />
-              <span>Clube de Assinatura</span>
+              <span>Uma experiência literária completa para você</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Box Club do Livro</h1>
-            <p className="text-orange-100 text-lg max-w-xl leading-relaxed">
-              Uma experiência literária completa entregue diretamente na sua casa a cada dois meses.
-            </p>
           </div>
           <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 transform rotate-3 hover:rotate-0 transition-transform duration-500">
             <Package size={80} className="text-white drop-shadow-lg" />
@@ -36,7 +33,7 @@ const BookBox: React.FC = () => {
             O que é o Box?
           </h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-6">
-            Participe do nosso Box de Livros e receba a cada dois meses em sua casa o livro proposto do mês e uma seleção exclusiva de acessórios pensados para enriquecer seu momento de leitura.
+            Participe do nosso Box de livros e adquira a cada dois meses o livro proposto do mês e uma seleção exclusiva de acessórios pensados para enriquecer seu momento de leitura.
           </p>
           
           <div className="bg-amber-50 rounded-xl p-6 border border-amber-100">
