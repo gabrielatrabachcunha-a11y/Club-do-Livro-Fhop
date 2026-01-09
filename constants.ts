@@ -94,7 +94,7 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do plano de leitura bíblica',
     date: '2025-01-27',
     displayDate: 'Janeiro - 27/01',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
   },
@@ -103,7 +103,7 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do livro Devoção Extravagante',
     date: '2025-02-24',
     displayDate: 'Fevereiro - 24/02',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Devoção Extravagante de Emi Sousa.'
   },
@@ -112,7 +112,7 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do plano de leitura bíblica',
     date: '2025-03-31',
     displayDate: 'Março - 31/03',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
   },
@@ -121,7 +121,7 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do livro Cultura de Oração',
     date: '2025-04-28',
     displayDate: 'Abril - 28/04',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Cultura de Oração de Mike Duque Estrada.'
   },
@@ -130,7 +130,7 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do plano de leitura bíblica',
     date: '2025-05-26',
     displayDate: 'Maio - 26/05',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
   },
@@ -139,7 +139,7 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do livro Caminhos Antigos',
     date: '2025-06-30',
     displayDate: 'Junho - 30/06',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Caminhos Antigos de J.C. Ryle.'
   },
@@ -148,25 +148,25 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do plano de leitura bíblica',
     date: '2025-07-28',
     displayDate: 'Julho - 28/07',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
   },
   {
     id: 'ago',
-    title: 'Discussão do livro Chamados para Cantar',
+    title: 'Discussão do livro Sem Cessar',
     date: '2025-08-25',
     displayDate: 'Agosto - 25/08',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
-    description: 'Análise e conversa sobre o livro Chamados para Cantar de Rachel Culver.'
+    description: 'Análise e conversa sobre o livro Sem Cessar de Billy Humphrey.'
   },
   {
     id: 'set',
     title: 'Discussão do plano de leitura bíblica',
     date: '2025-09-29',
     displayDate: 'Setembro - 29/09',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
   },
@@ -175,7 +175,7 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do livro Misericórdia Triunfante',
     date: '2025-10-27',
     displayDate: 'Outubro - 27/10',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Misericórdia Triunfante de Dale Anderson.'
   },
@@ -184,7 +184,7 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do plano de leitura bíblica',
     date: '2025-11-24',
     displayDate: 'Novembro - 24/11',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Encontro mensal para discussão e compartilhamento sobre a leitura bíblica.'
   },
@@ -193,7 +193,7 @@ export const EVENTS: AgendaEvent[] = [
     title: 'Discussão do livro Bíblia 360',
     date: '2025-12-08',
     displayDate: 'Dezembro - 08/12',
-    time: '19:30',
+    time: '20:00',
     location: 'FHOP',
     description: 'Análise e conversa sobre o livro Bíblia 360 de Daniel Lim.'
   }
@@ -204,7 +204,7 @@ export const INITIAL_CHALLENGES: BookChallenge[] = [
     id: '1',
     title: "Devoção Extravagante",
     author: "Emi Sousa",
-    description: "Um chamado para retornar ao primeiro amor e cultivar uma paixão ardente por Jesus, inspirado na vida e na adoração de Maria de Betânia.",
+    description: "Um chamado para retornar ao primeiro amor e cultivar uma passion ardente por Jesus, inspirado na vida e na adoração de Maria de Betânia.",
     coverColor: "bg-rose-700",
     month: "Janeiro / Fevereiro"
   },
@@ -226,9 +226,9 @@ export const INITIAL_CHALLENGES: BookChallenge[] = [
   },
   {
     id: '4',
-    title: "Chamados para Cantar",
-    author: "Rachel Culver",
-    description: "Uma visão bíblica sobre o ministério de música e canto na casa de oração, explorando o papel profético e sacerdotal da adoração.",
+    title: "Sem Cessar",
+    author: "Billy Humphrey",
+    description: "O livro explora a pergunta: Porque orar dia e noite? , oferecendo uma introdução impactante ao modelo de oração 24/7. Este livro combina fundamentos bíblicos, históricos e proféticos para explicar a importância e o impacto da oração contínua, desafiando os leitores a refletirem sobre seu próprio chamado à intercessão.",
     coverColor: "bg-purple-700",
     month: "Julho / Agosto"
   },
