@@ -26,12 +26,10 @@ export const generatePlan = (durationDays: number): Record<string, ReadingPlanIt
   const daysInMonth = [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
   const isSixMonth = durationDays === 180;
-  // Use "Mês 1"..."Mês 6" for the 6-month plan, otherwise use standard names
   const monthLabels = isSixMonth 
     ? ["Mês 1", "Mês 2", "Mês 3", "Mês 4", "Mês 5", "Mês 6"]
     : MONTH_NAMES;
 
-  // Initialize plan structure
   monthLabels.forEach(name => {
     plan[name] = [];
   });
@@ -40,11 +38,9 @@ export const generatePlan = (durationDays: number): Record<string, ReadingPlanIt
   const totalChapters = allChapters.length;
 
   let chaptersDistributed = 0;
-  let currentDayGlobal = 0; // 1 to durationDays
+  let currentDayGlobal = 0;
 
-  // Iterate through the calendar year until we reach durationDays
   for (let m = 0; m < 12; m++) {
-    // Break if we run out of labels (e.g. for 6 month plan)
     if (m >= monthLabels.length) break;
 
     const monthName = monthLabels[m];
@@ -52,15 +48,8 @@ export const generatePlan = (durationDays: number): Record<string, ReadingPlanIt
 
     for (let d = 1; d <= daysThisMonth; d++) {
       currentDayGlobal++;
-      
-      // If we are past the plan duration (e.g., day 181 of a 180-day plan), stop generating.
-      if (currentDayGlobal > durationDays) {
-        break;
-      }
+      if (currentDayGlobal > durationDays) break;
 
-      // Calculate the target number of chapters that should be finished by the end of today.
-      // We use Math.ceil to ensure we stay slightly ahead of schedule to avoid a huge pile at the end.
-      // However, for the very last day, we force it to totalChapters.
       let targetTotalChapters;
       if (currentDayGlobal === durationDays) {
         targetTotalChapters = totalChapters;
@@ -72,80 +61,41 @@ export const generatePlan = (durationDays: number): Record<string, ReadingPlanIt
       const chaptersForTodayCount = boundedTarget - chaptersDistributed;
 
       if (chaptersForTodayCount > 0) {
-        // Get the slice of chapters for today
         const todaysChapters = allChapters.slice(chaptersDistributed, chaptersDistributed + chaptersForTodayCount);
-        
-        // Update tracker
         chaptersDistributed += chaptersForTodayCount;
 
         // Group chapters by book
         const booksToday: Record<string, number[]> = {};
         todaysChapters.forEach(c => {
-          if (!booksToday[c.book]) {
-            booksToday[c.book] = [];
-          }
+          if (!booksToday[c.book]) booksToday[c.book] = [];
           booksToday[c.book].push(c.chapter);
         });
 
-        // Create plan items
+        // FIXED: Join different books in a single string for the same day
+        const bookDisplayNames: string[] = [];
+        const chapterDisplayNames: string[] = [];
+
         Object.entries(booksToday).forEach(([bookName, chapters]) => {
           const start = chapters[0];
           const end = chapters[chapters.length - 1];
-          const chapterString = start === end ? `${start}` : `${start}-${end}`;
+          const range = start === end ? `${start}` : `${start}-${end}`;
+          
+          bookDisplayNames.push(bookName);
+          chapterDisplayNames.push(`${bookName} ${range}`);
+        });
 
-          plan[monthName].push({
-            id: `${durationDays}-${m}-${d}-${bookName}`,
-            day: d,
-            monthIndex: m,
-            book: bookName,
-            chapters: chapterString,
-            completed: false
-          });
+        plan[monthName].push({
+          id: `${durationDays}-${m}-${d}`, // Unique ID per day instead of per book/day
+          day: d,
+          monthIndex: m,
+          book: bookDisplayNames.join(" / "),
+          chapters: chapterDisplayNames.join(" | "), // Combines like "Gênesis 50 | Jó 1-3"
+          completed: false
         });
       }
     }
     if (currentDayGlobal >= durationDays) break;
   }
   
-  // Final safety check: if for any calculation oddity we missed chapters, append them to the last active day
-  if (chaptersDistributed < totalChapters) {
-     const remaining = allChapters.slice(chaptersDistributed);
-     
-     // Find the last month that has content, or default to first
-     let lastMonthIndex = 0;
-     for(let i = monthLabels.length - 1; i >= 0; i--) {
-        if (plan[monthLabels[i]].length > 0) {
-            lastMonthIndex = i;
-            break;
-        }
-     }
-     const lastMonthName = monthLabels[lastMonthIndex];
-     
-     // Get the last day used in that month
-     const lastMonthItems = plan[lastMonthName];
-     const lastDay = lastMonthItems.length > 0 ? lastMonthItems[lastMonthItems.length - 1].day : daysInMonth[lastMonthIndex];
-
-     const booksRemaining: Record<string, number[]> = {};
-     remaining.forEach(c => {
-        if (!booksRemaining[c.book]) booksRemaining[c.book] = [];
-        booksRemaining[c.book].push(c.chapter);
-     });
-
-     Object.entries(booksRemaining).forEach(([bookName, chapters]) => {
-          const start = chapters[0];
-          const end = chapters[chapters.length - 1];
-          const chapterString = start === end ? `${start}` : `${start}-${end}`;
-
-          plan[lastMonthName].push({
-            id: `${durationDays}-overflow-${bookName}`,
-            day: lastDay,
-            monthIndex: lastMonthIndex,
-            book: bookName,
-            chapters: chapterString,
-            completed: false
-          });
-     });
-  }
-
   return plan;
 };
